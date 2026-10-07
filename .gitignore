@@ -1,0 +1,18 @@
+# patient data and pipeline outputs must never be committed
+data/*
+!data/README.md
+outputs/
+demo_data/
+demo_outputs/
+*.pt
+*.pth
+*.joblib
+*.svs
+*.ndpi
+*.mrxs
+# python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+.DS_Store

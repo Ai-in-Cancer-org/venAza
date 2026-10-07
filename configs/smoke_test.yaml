@@ -1,0 +1,23 @@
+# Tiny CPU configuration for an end-to-end smoke test on synthetic data
+# (scripts/00_make_synthetic_data.py). Foundation models are replaced by small
+# randomly initialised ViTs, so no Hugging Face access is needed.
+paths:
+  roi_dir: demo_data/rois
+  clinical_table: demo_data/clinical.csv
+  work_dir: demo_outputs
+  hf_cache_dir: demo_outputs/model_cache
+  external_roi_dir: demo_data/external/rois
+  external_clinical_table: demo_data/external/clinical.csv
+splits: {seeds: [42, 123]}
+resnet_mil: {pretrained: false, input_size: [96, 96], epochs: 2, use_amp: false, num_workers: 0,
+             max_train_tiles: 8, early_stop_patience: 2}
+foundation:
+  encoders:
+    conch: {debug: true, trainable_blocks: [10, 11]}
+    uni:   {debug: true, trainable_blocks: [10, 11]}
+  extract_batch_size: 16
+dino: {epochs: 1, out_dim: 256, hidden_dim: 64, bottleneck_dim: 32,
+       batch_size: {conch: 16, uni: 16}, num_workers: 0, save_every: 1}
+fm_mil: {epochs: 4, patience: 4}
+evaluation: {n_bootstrap: 100}
+explainability: {rollout_top_tiles: 4}
