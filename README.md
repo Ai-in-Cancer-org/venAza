@@ -9,17 +9,7 @@ The pipeline predicts best response (CR/CRi vs. non-response) to frontline
 venetoclax + azacitidine from bone marrow smear (BMS) images, alone and fused
 with clinical and genetic variables. Two independent image branches are
 implemented and each is combined with the clinical/genetic data in a late
-multimodal fusion step:
-
-```
-                    ┌─ 3  ResNet-34 gated-attention MIL (end-to-end) ─┐
-ROIs ─ 1 patches ───┤                                                 ├─ OOF image probability ─┐
-   + adaptive QC    └─ 4 DINO adaptation ─ 5/6 CONCH+UNI features ─ 7 MIL head ┘                 │
-                                                                                                 ├─ 8 late fusion ─ 9 evaluation
-clinical table ─ 2 labels, 16 clinical/genetic features, CV splits ──────────────────────────────┘     10 SHAP · 11 statistics
-                                                                                                       12 attention rollout
-external cohort ─ 1 patches ─ 5/6 features ─ 13 frozen external validation
-```
+multimodal fusion step.
 
 No data, trained weights or results are included in this repository.
 
